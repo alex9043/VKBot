@@ -2,6 +2,7 @@ package ru.alex9043.vkbot.API;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
@@ -12,6 +13,9 @@ import ru.alex9043.vkbot.dto.VKBotResponse;
 @RequiredArgsConstructor
 @Slf4j
 public class VKBotAPI {
+
+    @Value("${vk.api.url}")
+    private String url;
 
     private final RestTemplate restTemplate;
     private final VKBotConverter converter;
@@ -27,7 +31,7 @@ public class VKBotAPI {
         formData.forEach((key, value) -> log.debug("key - {}, value - {}", key, value));
 
         restTemplate.postForObject(
-                "https://api.vk.com/method/messages.send",
+                url,
                 formData,
                 String.class
         );

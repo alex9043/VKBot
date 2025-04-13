@@ -3,19 +3,18 @@ spring:
     name: VKBot
 
 server:
-  port: 5173
+  port: ${SERVER_PORT}
 
-logging:
-  level:
-    ru.alex9043.vkbot: INFO
+#logging:
+#  level:
+#    ru.alex9043.vkbot: ${LOGGING_LEVEL}
 
 vk:
   api:
     key: ${VK_API_KEY}
+    url: ${VK_API_URL}
   callback:
     api:
       secret: ${VK_CALLBACK_API_SECRET}
       confirm: ${VK_CALLBACK_API_CONFIRM}
-      version: 5.199
-
-
+      version: ${VK_CALLBACK_API_VERSION}

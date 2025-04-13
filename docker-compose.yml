@@ -1,0 +1,13 @@
+services:
+  vk_bot:
+    build: .
+    ports:
+      - "5173:5173"
+    environment:
+      - SERVER_PORT=5173
+      - LOGGING_LEVEL=INFO
+      - VK_API_KEY=
+      - VK_API_URL=https://api.vk.com/method/messages.send
+      - VK_CALLBACK_API_SECRET=
+      - VK_CALLBACK_API_CONFIRM=
+      - VK_CALLBACK_API_VERSION=5.199

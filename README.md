@@ -40,31 +40,63 @@ vk-tunnel --insecure=1 --http-protocol=http --ws-protocol=ws --host=localhost --
 ### Callback API
 
 Далее надо перейти на вкладку Callback API в управлении сообществом и вставить адрес, который передал VKTunnel в поле "
-адрес".
+адрес". **После запуска приложения, надо нажать кнопку подтвердить, чтобы вк знал, куда посылать запрос**
 
-## Запуск приложения
+## Запуск при помощи DOCKER
 
-Перед непосредственным запуском надо установить ключи в application.yml (src/main/resources/application.yml).
+Самый простой способ запустить приложение - при помощи docker-compose,
+если установлен Docker Desktop ([Windows](https://docs.docker.com/desktop/setup/install/windows-install/),
+[Linux](https://docs.docker.com/desktop/setup/install/linux/),
+[Mac](https://docs.docker.com/desktop/setup/install/mac-install/)).
+
+В файле docker-compose.yml надо указать в environment значения
+VK_API_URL, VK_CALLBACK_API_SECRET, VK_CALLBACK_API_CONFIRM
+
+И запустить команду:
+
+```bash
+docker compose up --build
+```
+
+Если пересобрать приложение с помощью maven, надо изменить путь в Dockerfile
+
+## Запуск без DOCKER
+
+### Запуск приложения
+
+Перед непосредственным запуском надо установить значения в application.yml (src/main/resources/application.yml).
 Также обязательно сменить порт на тот, что указан в VKTunnel
+
+По умолчанию значения следующие:
+
+- server.port=5173
+- vk.api.url=https://api.vk.com/method/messages.send
+- vk.callback.api.version=5.199
+- vk.api.key=указан в ключах доступа при настройке работы с API
+- vk.callback.api.secret=указан в поле секретный ключ в Callback API
+- vk.callback.api.confirm=Строка, которую должен вернуть сервер в Callback API
 
 ```yml
 spring:
   application:
     name: VKBot
 
+server:
+  port: ${SERVER_PORT}
+
 vk:
   api:
-    key: ваш_ключ_приложения
+    key: ${VK_API_KEY}
+    url: ${VK_API_URL}
   callback:
     api:
-      secret: ваш_ключ_callbackapi
-      confirm: ваш_код_подтверждения_callbackapi
-server:
-  port: 5173
+      secret: ${VK_CALLBACK_API_SECRET}
+      confirm: ${VK_CALLBACK_API_CONFIRM}
+      version: ${VK_CALLBACK_API_VERSION}
 ```
 
-Для запуска использовалась OpenJDK 23.
-Для начала надо собрать jar
+Для запуска использовалась [OpenJDK 23](https://jdk.java.net/archive/).
+Для начала надо собрать jar с помощью [maven](https://maven.apache.org/download.cgi)
 
 ```bash
 mvn clean install -f pom.xml
