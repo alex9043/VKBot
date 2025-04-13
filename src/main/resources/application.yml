@@ -9,3 +9,5 @@ vk:
     api:
       secret: ${VK_CALLBACK_API_SECRET}
       confirm: ${VK_CALLBACK_API_CONFIRM}
+server:
+  port: 5173
