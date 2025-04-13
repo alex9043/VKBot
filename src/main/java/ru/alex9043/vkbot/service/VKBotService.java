@@ -20,11 +20,18 @@ public class VKBotService {
         if (request.secret().equals(secret)) {
             log.info("Запрос валидный");
 
-            if (request.type().equals("confirmation")) {
+            if (checkRequestType(request, "confirmation")) {
                 log.info("Проверка сервера");
                 return ResponseEntity.ok(confirm);
+            } else if (checkRequestType(request, "message_new")) {
+                log.info("Новое сообщение");
+                log.debug("Данные сообщения - {}", request);
             }
         }
         return ResponseEntity.ok("ok");
+    }
+
+    private boolean checkRequestType(VKBotRequest request, String type) {
+        return request.type().equals(type);
     }
 }

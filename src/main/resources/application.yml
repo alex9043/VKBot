@@ -11,3 +11,6 @@ vk:
       confirm: ${VK_CALLBACK_API_CONFIRM}
 server:
   port: 5173
+logging:
+  level:
+    ru.alex9043.vkbot.service.VKBotService: DEBUG
