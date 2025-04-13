@@ -17,7 +17,7 @@ public class VKBotController {
     private final VKBotService service;
 
     @PostMapping
-    public ResponseEntity<?> vkRequest(@RequestBody VKBotRequest request) {
+    public ResponseEntity<String> vkRequest(@RequestBody VKBotRequest request) {
         return service.vkRequest(request);
     }
 }
